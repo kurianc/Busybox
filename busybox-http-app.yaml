@@ -60,7 +60,7 @@ objects:
         - busybox-http-app
         from:
           kind: ImageStreamTag
-          name: busybox-http-app:2.0
+          name: busybox-http-app:${TAG_NUMBER}
           namespace: busybox
       type: ImageChange
 - apiVersion: v1
@@ -99,3 +99,7 @@ objects:
       deploymentconfig: busybox-http-app
     sessionAffinity: None
     type: ClusterIP
+parameters:
+  - name: TAG_NUMBER
+    description: "Tag Number of the docker image"
+    value: latest
