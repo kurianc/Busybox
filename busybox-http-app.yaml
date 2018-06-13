@@ -37,8 +37,8 @@ objects:
           deploymentconfig: busybox-http-app
       spec:
         containers:
-        - image: ''
-        - name: busybox-http-app
+          image: ''
+          name: busybox-http-app
         - env:
           - name: key1String
             value: value1String
