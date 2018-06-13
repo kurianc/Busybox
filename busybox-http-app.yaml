@@ -5,6 +5,12 @@ metadata:
   name: busybox-http-app
 objects:
 - apiVersion: v1
+  kind: Secret
+  metadata:
+    name: busybox-http-app
+  stringData:
+    key1: value1
+- apiVersion: v1
   kind: DeploymentConfig
   metadata:
     annotations:
@@ -124,12 +130,6 @@ objects:
     resources:
       requests:
         storage: 1Gi
-- apiVersion: v1
-  kind: Secret
-  metadata:
-    name: busybox-http-app
-  stringData:
-    key1: value1
 parameters:
   - name: TAG_NUMBER
     description: "Tag Number of the docker image"
