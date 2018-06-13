@@ -37,6 +37,14 @@ objects:
           deploymentconfig: busybox-http-app
       spec:
         containers:
+        - env:
+          - name: key1String
+            value: value1String
+          - name: key1FromSecret
+            valueFrom:
+              secretKeyRef:
+                key: key1
+                name: busybox-http-app
         - image: ''
           imagePullPolicy: IfNotPresent
           name: busybox-http-app
@@ -45,12 +53,19 @@ objects:
             protocol: TCP
           resources: {}
           terminationMessagePath: /dev/termination-log
+          volumeMounts:
+          - mountPath: /var/lib/data
+            name: busybox-http-app-data
           terminationMessagePolicy: File
         dnsPolicy: ClusterFirst
         restartPolicy: Always
         schedulerName: default-scheduler
         securityContext: {}
         terminationGracePeriodSeconds: 30
+        volumes:
+        - name: busybox-http-app-data
+          persistentVolumeClaim:
+            claimName: busybox-http-app
     test: false
     triggers:
     - type: ConfigChange
@@ -99,6 +114,22 @@ objects:
       deploymentconfig: busybox-http-app
     sessionAffinity: None
     type: ClusterIP
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    name: busybox-http-app
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+- apiVersion: v1
+  kind: Secret
+  metadata:
+    name: busybox-http-app
+  stringData:
+    key1: value1
 parameters:
   - name: TAG_NUMBER
     description: "Tag Number of the docker image"
