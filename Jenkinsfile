@@ -17,7 +17,7 @@ node('master') {
         sh  'oc tag docker.io/openshift/busybox-http-app:latest busybox-http-app:${TAG_NUMBER}'
     }
     stage('Deploy busybox...') {
-	sh 'oc create configmap busybox-http-app --from-file=BusyBox/application.properties'
+	sh 'oc create configmap busybox-http-app --from-file=Busybox/application.properties'
         sh 'oc process -f Busybox/busybox-http-app.yaml -p TAG_NUMBER=${TAG_NUMBER} | oc apply -f -'
     }
     stage('Cleanup git clone...') {
