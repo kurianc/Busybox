@@ -43,8 +43,6 @@ objects:
           deploymentconfig: busybox-http-app
       spec:
         containers:
-          image: ''
-          name: busybox-http-app
         - env:
           - name: key1String
             value: value1String
@@ -54,6 +52,8 @@ objects:
                 key: key1
                 name: busybox-http-app
           imagePullPolicy: IfNotPresent
+          image: ''
+          name: busybox-http-app
           ports:
           - containerPort: 8080
             protocol: TCP
